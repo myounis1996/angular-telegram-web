@@ -1,0 +1,274 @@
+<div class="h-100">
+  <div class="px-3 d-flex align-items-center" style="height: 56px;">
+    <div class="d-flex w-100">
+      <button *ngIf="searchFocused" type="button"
+              class="d-flex btn-icon sidebar-back-button text-center line-h16px radius-50 secondary-text-color bg-transparent border-0 p-2 position-relative align-items-center justify-content-center"
+              style="min-width: 18px">
+        <div class="position-relative back-btn"></div>
+      </button>
+      <div *ngIf="!searchFocused" class="position-relative align-self-center text-center" ngbDropdown
+           (openChange)="menuToggle($event)"
+           placement="bottom-start">
+        <button class="bg-transparent border-0 btn-icon radius-50 p-2 d-flex align-items-center justify-content-center"
+                [class.btn-icon-active]="menuOpened" ngbDropdownToggle style="width: 40px; height: 40px">
+          <div class="position-absolute menu-icon"></div>
+        </button>
+        <div class="position-absolute mt-2 btn-menu border-0" ngbDropdownMenu>
+          <div class="d-flex dropdown-menu-item align-items-center cursor-pointer">
+            <span class="tgico btn-menu-item-icon font-20"></span>
+            <span class="primary-text-color font-14 font-weight-500 line-h18px">Saved Messages</span>
+          </div>
+          <div class="d-flex dropdown-menu-item align-items-center cursor-pointer">
+            <span class="tgico btn-menu-item-icon font-20"></span>
+            <span
+              class="primary-text-color font-14 font-weight-500 line-h18px flex-grow-1 flex-shrink-1">Archived Chats</span>
+            <span class="secondary-text-color ps-2 font-14">55</span>
+          </div>
+          <div class="d-flex dropdown-menu-item align-items-center cursor-pointer">
+            <span class="tgico btn-menu-item-icon font-20"></span>
+            <span class="primary-text-color font-14 font-weight-500 line-h18px">My Stories</span>
+          </div>
+          <div class="d-flex dropdown-menu-item align-items-center cursor-pointer">
+            <span class="tgico btn-menu-item-icon font-20"></span>
+            <span class="primary-text-color font-14 font-weight-500 line-h18px">Contacts</span>
+          </div>
+          <div class="d-flex dropdown-menu-item align-items-center cursor-pointer">
+            <span class="tgico btn-menu-item-icon font-20"></span>
+            <span class="primary-text-color font-14 font-weight-500 line-h18px">Settings</span>
+          </div>
+          <div class="d-flex dropdown-menu-item align-items-center cursor-pointer" (click)="darkModeSwitch.click()">
+            <span class="tgico btn-menu-item-icon font-20" #darkModeIcon></span>
+            <span
+              class="primary-text-color font-14 font-weight-500 line-h18px flex-grow-1 flex-shrink-1">Dark Mode</span>
+            <span class="ps-2">
+              <div class="form-check form-switch d-flex align-items-center custom-switch">
+                    <input class="form-check-input pointer-events-none"
+                           [checked]="toggleModeService.currentModeValue == 'dark'" type="checkbox"
+                           #darkModeSwitch (change)="onSwitchTheme($event)">
+                </div>
+            </span>
+          </div>
+          <div class="d-flex dropdown-menu-item align-items-center cursor-pointer" (click)="animationSwitch.click()">
+            <span class="tgico btn-menu-item-icon font-20"></span>
+            <span
+              class="primary-text-color font-14 font-weight-500 line-h18px flex-grow-1 flex-shrink-1">Animations</span>
+            <span class="ps-2">
+              <div class="form-check form-switch d-flex align-items-center custom-switch">
+                    <input class="form-check-input pointer-events-none" type="checkbox" #animationSwitch
+                           [checked]="animationService.currentStateValue" (change)="OnSwitchAnimation($event)">
+                </div>
+            </span>
+          </div>
+          <div class="d-flex dropdown-menu-item align-items-center cursor-pointer">
+            <span class="tgico btn-menu-item-icon font-20"></span>
+            <span class="primary-text-color font-14 font-weight-500 line-h18px">Telegram Features</span>
+          </div>
+          <div class="d-flex dropdown-menu-item align-items-center cursor-pointer">
+            <span class="tgico btn-menu-item-icon font-20"></span>
+            <span class="primary-text-color font-14 font-weight-500 line-h18px">Report Bug</span>
+          </div>
+          <div class="d-flex dropdown-menu-item align-items-center cursor-pointer">
+            <span class="tgico btn-menu-item-icon font-20"></span>
+            <span class="primary-text-color font-14 font-weight-500 line-h18px">Install App</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-0 position-relative w-100" style="margin-inline: 7px">
+        <input type="search" autocomplete="off" class="w-100 search-input form-control shadow-none"
+               [placeholder]="searchPlaceholder" (focusin)="focus(true)" (focusout)="focus(false)">
+        <div class="position-absolute search-icon d-flex align-items-center h-100 top-0">
+          <div *ngIf="searchPlaceholder !== 'Search'" class="spinner-border"
+               [class.secondary-text-color]="!searchFocused"
+               role="status" [class.primary-color]="searchFocused">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <ng-container *ngIf="searchPlaceholder === 'Search'">
+            <span class="tgico secondary-text-color font-24 "></span>
+          </ng-container>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav
+    class="position-relative d-flex flex-row overflow-x-auto menu-horizontal-div overflow-y-hidden w-100 hide-scrollbar border-bottom border-1 secondary-text-color"
+    (wheel)="onFolderScroll($event)" #foldersElement style="padding-left: .6875rem;">
+    <div
+      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
+      (click)="selectedFolderId = 0">
+      <div class="d-flex flex-column justify-content-center position-relative">
+        <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
+              [class.menu-horizontal-active]="selectedFolderId == 0">
+          All Chats
+          <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500"
+                [class.primary-bg]="selectedFolderId == 0" style="padding-inline: 6px; margin-left: 5px"></span>
+        </span>
+        <i class="w-100 position-absolute start-0 menu-horizontal-line"
+           [class.opacity-100]="selectedFolderId == 0"></i>
+      </div>
+    </div>
+
+    <div
+      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
+      (click)="selectedFolderId = 1">
+      <div class="d-flex flex-column justify-content-center position-relative">
+        <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
+              [class.menu-horizontal-active]="selectedFolderId == 1">
+          CC
+          <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500 py-0"
+                [class.primary-bg]="selectedFolderId == 1" style="padding-inline: 6px; margin-left: 5px">25</span>
+        </span>
+        <i class="w-100 position-absolute start-0 menu-horizontal-line"
+           [class.opacity-100]="selectedFolderId == 1"></i>
+      </div>
+    </div>
+
+    <div
+      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px "
+      (click)="selectedFolderId = 2">
+      <div class="d-flex flex-column justify-content-center position-relative">
+        <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
+              [class.menu-horizontal-active]="selectedFolderId == 2">
+          FOLDER
+          <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500 py-0"
+                [class.primary-bg]="selectedFolderId == 2" style="padding-inline: 6px; margin-left: 5px"></span>
+        </span>
+        <i class="w-100 position-absolute start-0 menu-horizontal-line"
+           [class.opacity-100]="selectedFolderId == 2"></i>
+      </div>
+    </div>
+
+    <div
+      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
+      (click)="selectedFolderId = 3">
+      <div class="d-flex flex-column justify-content-center position-relative">
+        <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
+              [class.menu-horizontal-active]="selectedFolderId == 3">
+          FOLDER
+          <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500 py-0"
+                [class.primary-bg]="selectedFolderId == 3" style="padding-inline: 6px; margin-left: 5px">15</span>
+        </span>
+        <i class="w-100 position-absolute start-0 menu-horizontal-line"
+           [class.opacity-100]="selectedFolderId == 3"></i>
+      </div>
+    </div>
+
+    <div
+      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
+      (click)="selectedFolderId = 4">
+      <div class="d-flex flex-column justify-content-center position-relative">
+        <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
+              [class.menu-horizontal-active]="selectedFolderId == 4">
+          Personal
+          <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500 py-0"
+                [class.primary-bg]="selectedFolderId == 4" style="padding-inline: 6px; margin-left: 5px">600</span>
+        </span>
+        <i class="w-100 position-absolute start-0 menu-horizontal-line"
+           [class.opacity-100]="selectedFolderId == 4"></i>
+      </div>
+    </div>
+    <div
+      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
+      (click)="selectedFolderId = 5">
+      <div class="d-flex flex-column justify-content-center position-relative">
+        <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
+              [class.menu-horizontal-active]="selectedFolderId == 5">
+        Unread
+          <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500 py-0"
+                [class.primary-bg]="selectedFolderId == 5" style="padding-inline: 6px; margin-left: 5px"></span>
+        </span>
+        <i class="w-100 position-absolute start-0 menu-horizontal-line"
+           [class.opacity-100]="selectedFolderId == 5"></i>
+      </div>
+    </div>
+  </nav>
+
+  <div class="position-relative p-2 overflow-x-hidden overflow-y-scroll default-scrollbar"
+       style="height: calc(100% - 104px)">
+    <div class="d-flex flex-column align-items-center">
+      <div class="d-flex sidebar-chat hover-effect align-items-center w-100 radius-10px"
+           [class.primary-bg]="selectedChatId === 0"
+           (click)="selectedChatId = 0">
+        <div class="avatar-gradient radius-50" style="margin-inline: 9px">
+          <img class="rounded-5" src="/54x54.jpg" alt="Profile Pic" width="54" height="54">
+        </div>
+        <div class="text-nowrap d-flex flex-column" style="max-width: 80%">
+          <div class="d-flex justify-content-between row-title">
+            <div
+              class="d-flex align-items-center font-16 overflow-ellipsis text-white font-weight-500 primary-text-color flex-grow-1 flex-shrink-1">
+              Username 1<span class="tgico font-18 dialog-muted-icon"
+                                    [style.color]="selectedChatId === 0 ? '#ffffffb3': ''"></span>
+            </div>
+            <div class="font-12 flex-grow-0 flex-shrink-0 ms-2"
+                 [ngClass]="{'text-white' : selectedChatId === 0, 'secondary-text-color': selectedChatId !== 0}">10:25
+            </div>
+          </div>
+          <div class="d-flex flex-row justify-content-between ">
+            <div class="overflow-ellipsis font-16 "
+                 [ngClass]="{'text-white' : selectedChatId === 0, 'secondary-text-color': selectedChatId !== 0}">
+              which is the same as saying through shrinking from toil and pain
+            </div>
+            <div class="ms-2">
+              <span class="badge rounded-pill secondary-bg"
+                    [ngClass]="{'text-bg-light primary-color' : selectedChatId === 0, 'text-white': selectedChatId !== 0}">25</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex sidebar-chat hover-effect align-items-center w-100 radius-10px"
+           [class.primary-bg]="selectedChatId === 1"
+           (click)="selectedChatId = 1">
+        <div class="avatar-gradient radius-50" style="margin-inline: 9px">
+          <img class="rounded-5" src="/54x54.jpg" alt="Profile Pic" width="54" height="54">
+        </div>
+        <div class="text-nowrap d-flex flex-column" style="max-width: 80%">
+          <div class="d-flex justify-content-between row-title">
+            <div
+              class="d-flex align-items-center font-16 overflow-ellipsis text-white font-weight-500 primary-text-color flex-grow-1 flex-shrink-1">
+              Username 1<span class="tgico font-18 dialog-muted-icon"
+                              [style.color]="selectedChatId === 1 ? '#ffffffb3': ''"></span>
+            </div>
+            <div class="font-12 flex-grow-0 flex-shrink-0 ms-2"
+                 [ngClass]="{'text-white' : selectedChatId === 1, 'secondary-text-color': selectedChatId !== 1}">10:25
+            </div>
+          </div>
+          <div class="d-flex flex-row justify-content-between ">
+            <div class="overflow-ellipsis font-16 "
+                 [ngClass]="{'text-white' : selectedChatId === 1, 'secondary-text-color': selectedChatId !== 1}">
+              which is the same as saying through shrinking from toil and pain
+            </div>
+            <div class="ms-2">
+              <span class="badge rounded-pill secondary-bg"
+                    [ngClass]="{'text-bg-light primary-color' : selectedChatId === 1, 'text-white': selectedChatId !== 1}">25</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="position-absolute btn-corner" ngbDropdown #newChatDropdown="ngbDropdown">
+      <button
+        class="btn d-flex align-items-center justify-content-center primary-bg z-1 shadow-none radius-50 hover-dark-primary active-dark-primary border-0"
+        style="width: 54px; height: 54px" ngbDropdownToggle>
+        <span class="tgico text-white" *ngIf="!newChatDropdown.isOpen()"></span>
+        <span class="tgico text-white" *ngIf="newChatDropdown.isOpen()"></span>
+      </button>
+      <div class="position-absolute radius-10px border-0 new-chat-dropdown" style="width: max-content;" ngbDropdownMenu>
+        <div class="d-flex flex-row dropdown-menu-item align-items-center line-h18px">
+          <span class="tgico btn-menu-item-icon font-20"></span>
+          <span class="primary-text-color font-14 font-weight-500">New Channel</span>
+        </div>
+        <div class="d-flex flex-row dropdown-menu-item align-items-center line-h18px">
+          <span class="tgico btn-menu-item-icon font-20"></span>
+          <span class="primary-text-color font-14 font-weight-500">New Group</span>
+        </div>
+        <div class="d-flex flex-row dropdown-menu-item align-items-center line-h18px">
+          <span class="tgico btn-menu-item-icon font-20"></span>
+          <span class="primary-text-color font-14 font-weight-500">New Private Chat</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

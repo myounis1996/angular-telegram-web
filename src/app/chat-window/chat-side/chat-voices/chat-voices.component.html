@@ -1,0 +1,38 @@
+<ng-container *ngIf="!isLoading">
+  <div class="d-flex flex-column position-relative " *ngFor="let item of data; let i = index;">
+    <span class="secondary-text-color font-weight-500 pt-4 top-border px-4" *ngIf="i !== 0">{{item.month}}</span>
+    <div class="side-month-padding">
+      <div class="d-flex align-items-center w-100 mb-4 gap-2 " style="height: 48px" *ngFor="let voice of item.audios">
+        <audio [id]="voice.id" [controls]="true" (loadedmetadata)="onLoadMetaData(voice, $event)" (ended)="onEndVoice(voice)">
+          <source [src]="voice.src" type="audio/mpeg">
+        </audio>
+        <div class="col-2 h-100 p-0" style="width: 48px">
+          <div (click)="voice.isPlaying ? pause(voice) : play(voice)"
+               class="m-1 w-100 h-100 position-relative d-flex align-items-center justify-content-center primary-bg radius-50">
+            <span class="tgico text-white">{{!voice.isPlaying ? ''  : ''}}</span>
+          </div>
+        </div>
+        <div class="col-10 text-nowrap overflow-clip">
+          <div class="primary-text-color font-weight-400 font-16 line-h21px d-flex justify-content-between">
+            <span>You  ➝ Username</span>
+            <span class="font-12 secondary-text-color">{{item.month}} 11</span>
+          </div>
+          <div class="secondary-text-color font-14 line-h18px d-flex justify-content-between gap-2">
+            <span>{{voice.isPlaying || voice.currentTime != 0 ? formatSecondsAsTime(voice.currentTime) : formatSecondsAsTime(voice.duration)}}</span>
+            <input class=" w-100 " type="range" [value]="voice.currentTime" min="0" [max]="voice.duration"
+                   (change)="changeCurrentTime(voice, $event)" *ngIf="voice.isPlaying || voice.currentTime != 0">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div class="position-relative w-100 h-100">
+  <div *ngIf="isLoading" class="position-absolute spinner-container ">
+    <div class="spinner-border primary-color w-100 h-100" role="status" >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
+

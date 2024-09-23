@@ -1,0 +1,25 @@
+<ng-container *ngIf="!isLoading" >
+  <div class="d-flex flex-column" *ngFor="let item of data; let i = index;">
+    <span class="side-month-padding secondary-text-color font-weight-500" *ngIf="i !== 0">{{item.month}}</span>
+    <div class="row w-100 d-grid m-0">
+      <div class="col-4 p-0 w-100 position-relative ratio ratio-1x1" *ngFor="let media of item.media;" (click)="openMediaViewer(media.id)">
+        <img *ngIf="media.type.startsWith('image')" [src]="media.media" class="w-100 h-auto aspect-ratio-1 object-fit-cover">
+        <ng-container *ngIf="media.type.startsWith('video')">
+          <video  [autoplay]="false" preload="metadata" class="w-100 h-auto object-fit-cover aspect-ratio-1" (loadedmetadata)="onLoadMetaData(media, $event)">
+            <source [src]="media.media + '#t=0.1'" [type]="media.type">
+          </video>
+          <span class="position-absolute media-time w-auto h-auto font-12 line-h18px rounded-1 text-white" *ngIf="media.duration">{{formatSecondsAsTime(media.duration)}}</span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div class="position-relative w-100 h-100">
+  <div *ngIf="isLoading" class="position-absolute spinner-container ">
+    <div class="spinner-border primary-color w-100 h-100" role="status" >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
+

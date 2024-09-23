@@ -1,0 +1,10 @@
+.row {
+  padding-top: 1px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1px;
+}
+.side-month-padding {
+  padding: 9px 0 7px 24px;
+}
+
+

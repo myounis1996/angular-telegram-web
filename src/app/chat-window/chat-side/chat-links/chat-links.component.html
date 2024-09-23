@@ -1,0 +1,40 @@
+<ng-container *ngIf="!isLoading">
+  <div class="d-flex flex-column position-relative" *ngFor="let item of data; let i = index;">
+    <span class="secondary-text-color font-weight-500 pt-4 top-border px-4" *ngIf="i !== 0">{{item.month}}</span>
+    <div class="margin-9px">
+      <a *ngFor="let link of item.links;"
+         class="d-flex align-items-start w-100 hover-effect radius-10px px-2 pt-2 text-decoration-none gap-2 mw-100"
+         style="min-height: 70px" [href]="link.detectedLink" target="_blank">
+        <div *ngIf="!link.img" style="height: 48px; max-width: 48px; min-width: 48px;"
+             class="m-1 w-100 h-100  d-flex align-items-center justify-content-center primary-bg text-white font-32 radius-5px">
+          {{link.title.charAt(0).toUpperCase()}}
+        </div>
+        <div *ngIf="link.img" style="height: 48px; max-width: 48px; min-width: 48px;"
+             class="w-100 h-100 d-flex align-items-center justify-content-center ratio-1x1">
+          <img [src]="link.img" class="w-100 h-100 radius-5px object-fit-cover aspect-ratio-1">
+        </div>
+
+        <div class="d-flex flex-column position-relative w-100 overflow-clip">
+          <div class="d-flex justify-content-between w-100 align-items-center gap-1">
+            <div class="overflow-ellipsis primary-text-color font-weight-500 ">
+              {{link.title}}
+            </div>
+            <div class="secondary-text-color font-12 text-nowrap">{{item.month}} 11</div>
+          </div>
+          <span
+            class="secondary-text-color font-14 text-break">{{link.message.substring(0, link.message.indexOf(link.detectedLink))}}</span>
+          <span class="font-14 line-h18px primary-color text-break">{{link.detectedLink}}</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</ng-container>
+
+<div class="position-relative w-100 h-100">
+  <div *ngIf="isLoading" class="position-absolute spinner-container ">
+    <div class="spinner-border primary-color w-100 h-100" role="status" >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
+

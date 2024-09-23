@@ -1,0 +1,34 @@
+<ng-container *ngIf="!isLoading">
+  <div class="d-flex flex-column position-relative pb-3" *ngFor="let item of data; let i = index;">
+    <span class="secondary-text-color font-weight-500 pt-4 top-border px-4" *ngIf="i !== 0">{{item.month}}</span>
+    <ng-container *ngFor="let file of item.files;">
+      <div class="d-flex align-items-center w-100 file-row ps-20px pe-4 gap-2 cursor-pointer" style="height: 72px">
+        <div style="height: 48px; min-width: 48px;" *ngIf="!file.img"
+             class="m-1 position-relative d-flex align-items-end justify-content-center primary-bg text-white file-ico font-18 radius-5px">
+        <span class="hover-none overflow-ellipsis text-center"
+              style="width: 40px">{{file.name.substring(file.name.lastIndexOf('.') + 1)}}</span>
+          <img ngSrc="/svg/download.svg" class="svg-white d-none hover-show" height="24" width="24">
+        </div>
+        <div style="height: 48px; width: 48px; min-width: 48px;" *ngIf="file.img"
+             class="m-1 position-relative d-flex align-items-end justify-content-center radius-5px">
+          <img [src]="file.img" class="w-100 h-100 radius-5px">
+          <div class="position-absolute d-flex w-100 h-100 justify-content-center align-items-center">
+            <img ngSrc="/svg/download.svg" class="svg-white d-none hover-show" height="24" width="24">
+          </div>
+        </div>
+        <div class="d-flex flex-column text-nowrap overflow-clip">
+          <span class="primary-text-color font-weight-400 font-16 line-h21px">{{file.name}}</span>
+          <span class="secondary-text-color font-14 line-h18px">{{file.size}} · {{file.date}}</span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<div class="position-relative w-100 h-100">
+  <div *ngIf="isLoading" class="position-absolute spinner-container ">
+    <div class="spinner-border primary-color w-100 h-100" role="status" >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>

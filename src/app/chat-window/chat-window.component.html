@@ -1,0 +1,115 @@
+<div class="row position-relative h-100">
+  <div class="col p-0 m-0 position-relative" [class.col-8]="!isCollapsed">
+    <app-chat-header (collapseChange)="collapse.toggle($event)"></app-chat-header>
+    <ngx-simplebar class="w-100 position-relative" #chatScrollArea
+         style="height: calc(100vh - 130px);">
+      <div class="container w-100 d-flex flex-column content-box py-2 " style="max-width: 640px">
+        <section>
+          <div class="sticky-top d-flex justify-content-center section-date font-weight-500 pb-">
+            <div class="cursor-pointer rounded-pill bg-highlight date-padding text-white">
+              August 27
+            </div>
+          </div>
+          <!--        Received Message-->
+          <div class="position-relative w-100">
+            <div *ngIf="messageSelection.isSelected(0)" class="position-absolute selected h-100"></div>
+            <div class="d-flex">
+              <div class="form-check z-2 align-self-end" style="padding-bottom: 0.3125rem">
+                <input class="form-check-input form-check-input-select border-2 border-white cursor-pointer bg-transparent"
+                       type="checkbox" [checked]="messageSelection.isSelected(0)" (change)="messageSelection.toggle(0)">
+              </div>
+              <div class="px-2 message-bubble message-received d-flex py-0 custom-mb-1">
+                <div class="py-1 primary-text-color">
+                  Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?Hello! How are you?
+                </div>
+                <div class="d-flex float-end font-12 align-self-end inner-time mb-1" >
+                  <span class="m-0 p-0 secondary-text-color" style="line-height: 12px">12:00 </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--        Sent Message-->
+          <div class="w-100 d-flex justify-content-between position-relative">
+            <div *ngIf="messageSelection.isSelected(1)" class="position-absolute selected h-100"></div>
+            <div class="form-check z-2" style="padding-bottom: 0.3125rem">
+              <input class="form-check-input form-check-input-select border-2 border-white cursor-pointer bg-transparent"
+                     type="checkbox" [checked]="messageSelection.isSelected(1)" (change)="messageSelection.toggle(1)">
+            </div>
+            <div class="px-2 message-bubble message-sent d-flex py-0 custom-mb-1 primary-text-color">
+              <div class="py-1">
+                I'm good, thank you! How about you?
+              </div>
+              <div class="d-flex align-items-end float-end font-12 align-self-end inner-time mb-1" >
+                <span class="tgico eye-icon message-time"></span>
+                <span class="m-0 p-0 message-time" style="line-height: 12px">12:00 </span>
+                <span class="tgico time-sending-status"></span>
+                <span class="tgico time-sending-status"></span>
+                <span class="tgico time-sending-status"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </ngx-simplebar>
+
+    <div *ngIf="!messageSelection.hasValue()"
+         class="position-absolute w-100 message-input-container d-flex justify-content-center ">
+      <div class="d-flex align-items-center message-bubble message-sent message-input-direct-parent w-100 px-2 m-0"
+           style="max-width: 650px">
+        <button class="btn btn-icon border-0 d-flex align-items-center justify-content-center radius-50" style="width: 34px; height: 34px"><span class="tgico button-icon"></span></button>
+        <input type="text" autocomplete="off"
+               class="w-100 form-control shadow-none border-0 bg-transparent message-input"
+               placeholder="Message">
+        <button
+          class="btn btn-icon d-flex align-items-center justify-content-center btn-icon-margin radius-50 p-0 border-0"
+          style="min-width: 34px; height: 34px">
+          <span class="tgico button-icon"></span>
+        </button>
+      </div>
+      <div class="position-relative">
+        <button class="btn d-flex align-items-center justify-content-center primary-bg radius-50 hover-dark-primary active-dark-primary border-0"
+                style="width: 54px; height: 54px;">
+          <span class="tgico text-white"></span>
+        </button>
+        <button *ngIf="canScrollToBottom" class="btn d-flex align-items-center justify-content-center radius-50 border-0 chat-secondary-btn position-relative position-absolute"
+                style="width: 54px; height: 54px; bottom: 64px;" (click)="onScrollToEnd()">
+          <span class="tgico button-icon"></span>
+        </button>
+      </div>
+
+    </div>
+
+    <div *ngIf="messageSelection.hasValue()"
+         class="position-absolute w-100 message-input-container d-flex justify-content-center">
+      <div
+        class="d-flex align-items-center justify-content-between message-input-direct-parent w-100 px-2 my-0 mx-2 selection-container"
+        style="max-width: 460px">
+        <div class="d-flex align-items-center">
+          <button class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50" style="margin-right: 5px;"
+                  (click)="messageSelection.clear()"><span class="tgico button-icon"></span></button>
+          <span class="font-weight-500 font-15 line-h22a5px primary-text-color">{{messageSelection.selected.length}}
+            message{{messageSelection.selected.length == 1 ? "" : "s"}}</span>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <button class="btn border-0 d-flex align-items-center btn-icon px-3 radius-10px"
+                  (click)="openForward()">
+            <span class="tgico button-icon" style="margin-inline-end: 14px"></span>
+            <span class="font-15 font-weight-50 primary-text-color0">Forward</span>
+          </button>
+          <button class="btn border-0 d-flex align-items-center btn-icon hover-effect-danger px-3 radius-10px danger-color danger-btn"
+                  style="margin-inline-start: 6px" (click)="openConfirm()">
+            <span class="tgico" style="margin-inline-end: 10px"></span>
+            <span class="font-15 font-weight-500">Delete</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4 p-0 position-relative border-inline-start surface-bg" #collapse="ngbCollapse"
+       [(ngbCollapse)]="isCollapsed" [horizontal]="true" [animation]="false">
+    <app-chat-side (collapseChange)="collapse.toggle($event)"></app-chat-side>
+  </div>
+</div>

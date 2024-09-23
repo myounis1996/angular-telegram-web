@@ -1,0 +1,24 @@
+<div class="surface-bg popup-shadow modal-container radius-10px">
+  <div class="modal-header p-0 border-0">
+    <div class="d-flex align-items-center px-3 popup-header">
+      <div class="avatar-gradient radius-50">
+        <img class="rounded-5" src="/54x54.jpg" alt="Profile Pic" width="32" height="32">
+      </div>
+      <span class="font-weight-500 font-20 px-3 line-h26px primary-text-color">Delete message</span>
+    </div>
+  </div>
+  <div class="modal-body p-0">
+    <p class="text-break modal-desc font-16 m-0">Are you sure you want to delete this message?</p>
+    <div class="form-check hover-effect d-flex align-items-center m-0 cursor-pointer radius-10px" (click)="flexCheck.checked = !flexCheck.checked;">
+      <input class="form-check-input m-0 shadow-none" type="checkbox" value="" id="flexCheckDefault" #flexCheck>
+      <label class="form-check-label text-break cursor-pointer" for="flexCheckDefault">
+        Also delete for Abd
+      </label>
+    </div>
+  </div>
+  <div class="modal-footer border-0 p-0 px-2">
+    <button type="button" class="btn border-0 primary-color font-weight-500 cancel-btn px-3 py-0 m-0 radius-10px" (click)="modal.dismiss()">CANCEL</button>
+    <button type="button" class="btn border-0 danger-color font-weight-500 danger-btn px-3 py-0 m-0 radius-10px hover-effect-danger" >DELETE</button>
+  </div>
+</div>
+

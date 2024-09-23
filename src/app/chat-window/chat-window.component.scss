@@ -1,0 +1,115 @@
+.upload-btn-icon {
+  margin-block: 0 5px;
+  margin-inline: 0.125rem;
+}
+
+.content-box {
+  box-sizing: content-box;
+}
+
+.message-bubble {
+  --r: 10px; /* the radius */
+  --t: 12px; /* the size of the tail */
+  max-width: 30rem;
+  min-width: 56px;
+  padding-top: 4px;
+  padding-bottom: 5px;
+  border-inline: var(--t) solid #0000;
+  border-radius: calc(var(--r) + var(--t))/var(--r);
+  mask: radial-gradient(100% 100% at var(--_p) 0, #0000 99%, #000 102%) var(--_p) 100%/var(--t) var(--t) no-repeat,
+  linear-gradient(#000 0 0) padding-box;
+  color: #fff;
+}
+
+.message-received {
+  --_p: 0;
+  border-bottom-left-radius: 0 0;
+  background-color: var(--surface-color);
+  place-self: start;
+}
+
+.message-sent {
+  --_p: 100%;
+  border-bottom-right-radius: 0 0;
+  place-self: end;
+  background-color: var(--message-out-background-color);
+  .message-time {
+    color: var(--message-out-time-color);
+  }
+}
+
+.message-input-container {
+  bottom: 20px;
+}
+
+.eye-icon {
+  margin-inline-start: 2px;
+  height: 1.125rem;
+  font-size: 1.125rem;
+  margin-inline-end: 0.375rem;
+}
+
+.message-input-direct-parent {
+  background-color: var(--surface-color);
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 54px;
+}
+
+.form-control::placeholder {
+ color: #a2acb4;
+}
+
+.time-sending-status {
+  order: 5;
+  font-size: 19px;
+  line-height: 12px;
+  color: var(--message-out-status-color);
+}
+
+.selection-container {
+  border-radius: 1rem;
+}
+
+.message-input {
+  height: 37px;
+}
+
+.custom-mb-1 {
+  margin-bottom: 0.125rem;
+}
+
+.inner-time {
+  margin-left: 3px;
+}
+
+.mb-1px {
+  margin-bottom: 1px;
+}
+
+.btn-icon-white {
+  opacity: 1 !important;
+}
+
+.form-check-input-select {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+}
+
+.selected{
+  background-color: var(--message-highlighting-color);
+  width: 300%;
+  left: -100%;
+  overflow: hidden;
+}
+
+.section-date {
+  margin-bottom: 2px;
+  padding-bottom: 5px;
+  opacity: .99999;
+}
+
+.date-padding {
+  padding: 4.5px 10px;
+}

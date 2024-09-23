@@ -1,0 +1,48 @@
+.modal-container {
+  padding: 12px 8px;
+  width: 312px;
+  min-height: 220px;
+  margin-left: -5px!important;
+}
+
+.popup-header {
+  height: 40px;
+}
+
+.modal-desc {
+  line-height: 1.3125;
+  padding: 10px 16px 8px;
+}
+
+.form-check-input {
+  width: 20px;
+  height: 20px;
+  border-radius: 0.3125rem !important;
+  border: 2px solid #8d969c;
+  pointer-events: none;
+}
+
+.form-check-input:checked {
+  border: none !important;
+  background-color: var(--primary-color) !important;
+}
+
+.form-check {
+  min-height: 48px;
+  padding: 4px 18px;
+}
+
+.form-check-label {
+  padding-left: 34px;
+  line-height: 1.3125;
+
+}
+
+.cancel-btn, .danger-btn {
+  height: 2.5rem;
+}
+
+.cancel-btn:hover, .cancel-btn:active {
+  background-color: var(--light-primary-color) !important;
+}
+

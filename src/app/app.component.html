@@ -1,0 +1,17 @@
+<router-outlet/>
+<div class="container h-100 inline-border">
+  <div class="row h-100">
+    <div class="col-lg-3 h-100 surface-bg p-0 position-relative column-left">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="col-lg-9 position-relative">
+      <div class="chat-background" >
+        <div class="chat-background-item pattern is-dark" #background>
+          <canvas class="chat-background-item-canvas chat-background-item-color-canvas chat-background-item-scalable" [style.--opacity-max]="toggleModeService.currentModeValue === 'dark' ? ' 0.3' : '1'" #gradientCanvas></canvas>
+          <canvas class="chat-background-item-canvas chat-background-item-pattern-canvas" #patternCanvas ></canvas>
+        </div>
+      </div>
+      <app-chat-window></app-chat-window>
+    </div>
+  </div>
+</div>

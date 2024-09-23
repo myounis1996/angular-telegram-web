@@ -1,0 +1,35 @@
+<ng-container *ngIf="!isLoading">
+  <div class="pt-2 pb-3 position-relative ps-20px">
+    <div class="row align-items-center w-100 hover-effect radius-10px" style="height: 56px" *ngFor="let group of data">
+      <div class="col-2 ">
+        <div style="height: 48px; width: 48px;">
+          <div *ngIf="!group.img"
+               class="m-1 w-100 h-100 position-relative d-flex align-items-center justify-content-center primary-bg text-white radius-50 font-16">
+            <span class="font-weight-500">{{group.name.charAt(0).toUpperCase()}}</span>
+          </div>
+          <div *ngIf="group.img"
+               class="m-1 w-100 h-100 position-relative d-flex align-items-center justify-content-center avatar-gradient radius-50">
+            <img [src]="group.img" class="w-100 h-100 radius-50">
+          </div>
+        </div>
+      </div>
+      <div class="col-10 text-nowrap overflow-clip">
+        <div class="primary-text-color font-weight-400 font-16 line-h21px">
+          {{group.name}}
+        </div>
+        <div class="secondary-text-color font-14 line-h18px">
+          {{group.members}} members
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<div class="position-relative w-100 h-100">
+  <div *ngIf="isLoading" class="position-absolute spinner-container ">
+    <div class="spinner-border primary-color w-100 h-100" role="status" >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
+

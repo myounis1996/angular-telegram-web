@@ -1,0 +1,35 @@
+<div class="popup-forward position-relative d-flex align-items-center " >
+  <div class="surface-bg popup-shadow modal-container d-flex flex-column radius-10px">
+    <div class="modal-header p-0 px-3 border-0">
+      <button
+        class="btn border-0 p-2 radius-50 hover-background d-flex align-items-center justify-content-center me-4 btn-icon"
+        (click)="modal.close()"><span class="tgico  button-icon"></span></button>
+      <input type="text" class="form-control bg-transparent border-0 shadow-none w-100 font-20 p-0"
+             placeholder="Forward to...">
+    </div>
+    <div class="modal-body default-scrollbar p-0 overflow-y-scroll" [class.top-border]="scroll > 1" (scroll)="onScroll($event)">
+      <div class="d-flex align-items-center hover-effect radius-10px px-3 gap-3 mx-2" style="height: 56px" *ngFor="let chat of data">
+        <div class="col-2 " style="height: 42px; width: 42px;">
+          <div *ngIf="!chat.img"
+               class="w-100 h-100 position-relative d-flex align-items-center justify-content-center bg-primary text-white radius-50 font-16">
+            <span class="hover-none font-weight-500">{{chat.name.charAt(0).toUpperCase()}}</span>
+          </div>
+          <div *ngIf="chat.img"
+               class="w-100 h-100 position-relative d-flex align-items-center justify-content-center avatar-gradient radius-50">
+            <img [src]="chat.img" class="w-100 h-100 radius-50">
+          </div>
+        </div>
+
+        <div class="col-10 text-nowrap">
+          <div class="primary-text-color font-weight-400 font-16 line-h21px overflow-ellipsis">
+            {{chat.name}}
+          </div>
+          <div class="secondary-text-color font-14 line-h18px">
+            {{chat.status}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

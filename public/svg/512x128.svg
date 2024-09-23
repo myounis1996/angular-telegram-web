@@ -1,0 +1,18 @@
+<svg width="512" height="128" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 128" preserveAspectRatio="none">
+      <defs>
+        <style type="text/css">
+          #holder text {
+            fill: #000000;
+            font-family: sans-serif;
+            font-size: 32px;
+            font-weight: 500;
+          }
+        </style>
+      </defs>
+      <g id="holder">
+        <rect width="100%" height="100%" fill="#aaaaaa"></rect>
+        <g>
+          <text text-anchor="middle" x="50%" y="50%" dy=".3em">512 x 128</text>
+        </g>
+      </g>
+    </svg>

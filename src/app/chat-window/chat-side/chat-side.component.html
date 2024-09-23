@@ -1,0 +1,179 @@
+<ngx-simplebar class="d-flex w-100 position-relative"
+               style="height: 100vh;"
+               #sideScrollArea>
+  <div class="d-flex justify-content-start px-3 align-items-center position-sticky top-0 surface-bg z-3"
+       style="min-height: 56px !important;" [class.d-none]="sliderShown || infoHeaderShown">
+    <button class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50 me-12px"
+            (click)="toggleCollapse(false)"><span class="tgico button-icon"></span></button>
+    <span class="text-nowrap overflow-ellipsis ps-4 font-20 font-weight-500 primary-text-color">User Info</span>
+  </div>
+
+  <div class="d-flex justify-content-start px-3 align-items-center position-sticky top-0 surface-bg z-3"
+       style="min-height: 56px !important; " [class.d-none]="!infoHeaderShown">
+    <button type="button" class="d-flex btn-icon sidebar-back-button text-center line-h16px radius-50 secondary-text-color bg-transparent border-0 p-2 position-relative align-items-center justify-content-center" style="min-width: 18px" (click)="onBackClicked()">
+      <div class="position-relative back-btn"></div>
+    </button>
+    <div class="d-flex flex-column justify-content-start overflow-ellipsis font-20 ps-4 text-nowrap">
+      <span class="font-16 primary-text-color font-weight-500 line-h21px">Username</span>
+      <span class="font-14 secondary-text-color line-h20px">14 media files</span>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column w-100 " >
+    <div class="d-flex flex-column align-items-center py-3" [class.d-none]="sliderShown" >
+      <div class="avatar-gradient radius-50">
+        <img src="/54x54.jpg" alt="Profile Pic" width="120" height="120" class="radius-50">
+      </div>
+      <div class="flex-grow-1 d-flex flex-column pt-3 text-center">
+        <span class="font-20 font-weight-500 line-h26px primary-text-color">Username</span>
+        <span class="font-14 line-h16px secondary-text-color">last seen recently</span>
+      </div>
+    </div>
+
+    <div class="w-100 position-relative" style="height: 420px; " [class.d-none]="!sliderShown">
+      <div class="d-flex justify-content-start px-3 align-items-center position-absolute top-0 z-3"
+           style="min-height: 56px !important;">
+        <button class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50"
+                (click)="toggleCollapse(false)"><span class="tgico button-icon text-white"></span>
+        </button>
+        <span class="overflow-ellipsis text-nowrap ps-4 font-20 font-weight-500 text-white">User Info</span>
+      </div>
+      <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" #carousel [animation]="false"
+                    (click)="previewImages($event)">
+        <ng-template ngbSlide *ngFor="let image of images; let i = index;" [id]="(i).toString()">
+          <div class="" >
+            <img [src]="image" alt="Random slide" height="420" class="object-fit-cover aspect-ratio-1"/>
+          </div>
+          <div class="carousel-caption d-flex flex-column end-0 bottom-0 pt-0 pb-2 text-start">
+            <span class="font-20 font-weight-500 text-white line-h26px">Username</span>
+            <span class="font-14 text-white line-h16px profile-subtitle">last seen recently</span>
+          </div>
+        </ng-template>
+      </ngb-carousel>
+    </div>
+
+    <div [style.margin-top.px]="sliderShown ? 0 : 10" class="py-2 position-relative w-100">
+      <div class="d-flex align-items-center mx-2 hover-effect px-3 radius-10px cursor-pointer"  style="height: 56px; padding-top: 7px; padding-bottom: 7px">
+        <span class="tgico secondary-text-color"></span>
+        <div class="d-flex flex-column justify-content-start text-nowrap" style="padding-left: 2rem !important;">
+          <span class="font-16 primary-text-color">+42 777</span>
+          <span class="font-14 secondary-text-color">Phone</span>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center mx-2 hover-effect px-3 radius-10px cursor-pointer"  style="min-height: 56px; padding-top: 7px; padding-bottom: 7px" >
+        <span class="tgico secondary-text-color"></span>
+        <div class="d-flex flex-column justify-content-start text-break" style="padding-left: 2rem !important;">
+          <span class="font-16 primary-text-color">Unique_Username</span>
+          <span class="font-14 secondary-text-color">Username</span>
+        </div>
+      </div>
+      <div class="d-flex align-items-center mx-2 hover-effect px-3 radius-10px cursor-pointer"  style="min-height: 56px; padding-top: 7px; padding-bottom: 7px">
+        <span class="tgico secondary-text-color"></span>
+        <div class="d-flex flex-column justify-content-start text-break" style="padding-left: 2rem !important;">
+          <span class="font-16 primary-text-color ">My Location</span>
+          <span class="font-14 secondary-text-color ">Location</span>
+        </div>
+      </div>
+      <div class="d-flex align-items-center mx-2 hover-effect px-3 radius-10px cursor-pointer"  style="min-height: 56px; padding-top: 7px; padding-bottom: 7px">
+        <span class="tgico secondary-text-color"></span>
+        <div class="d-flex flex-column justify-content-start text-break" style="padding-left: 2rem !important;">
+          <span class="font-16 primary-text-color line-h21px">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</span>
+          <span class="font-14 secondary-text-color line-h18px" style="margin-top: 3px">Bio</span>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center mx-2 hover-effect px-3 radius-10px cursor-pointer"  style="min-height: 56px; padding-top: 7px; padding-bottom: 7px">
+        <span class="tgico secondary-text-color"></span>
+        <div class="d-flex flex-column justify-content-start text-break" style="padding-left: 2rem !important;">
+          <span class="font-16 primary-text-color line-h21px">https://example.com</span>
+          <span class="font-14 secondary-text-color line-h18px" style="margin-top: 3px">Link</span>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center mx-2 hover-effect px-3 radius-10px cursor-pointer"  style="min-height: 56px; padding-top: 7px; padding-bottom: 7px">
+        <span class="tgico secondary-text-color"></span>
+        <div class="d-flex flex-column justify-content-start text-break" style="padding-left: 2rem !important;">
+          <span class="font-16 primary-text-color line-h21px">12:00 - 13:00</span>
+          <span class="font-14 secondary-text-color line-h18px" style="margin-top: 3px">Business hours</span>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center mx-2 py-2 hover-effect px-3 radius-10px cursor-pointer" style="height: 48px; min-height: 48px"
+           (click)="NotificationSwitch.click()">
+        <span class="tgico secondary-text-color"></span>
+        <span class="font-16 primary-text-color" style="padding-left: 2rem !important;">Notifications</span>
+        <div class="form-check form-switch d-flex align-items-center custom-switch ms-auto">
+          <input class="form-check-input border-1 pointer-events-none" type="checkbox" #NotificationSwitch>
+        </div>
+      </div>
+    </div>
+
+    <div class="other-bg right-separator" style="min-height: 12px;"></div>
+    <nav class="row p-0 w-100 border-bottom menu-horizontal-div m-0 position-sticky surface-bg z-3 secondary-text-color" #navElement
+         style="top: 55px;">
+      <div class="col p-0 nav-item cursor-pointer hover-effect position-relative h-100 d-flex align-items-center justify-content-center"
+           (click)="onClickNavItem(categories.MEDIA)">
+        <div class="d-flex flex-column justify-content-center position-relative">
+          <span class="font-16 line-h21px mt-auto font-weight-500 secondary-text-color" [class.menu-horizontal-active]="selectedCategoryId == categories.MEDIA">Media</span>
+          <i class="w-100 position-absolute start-0 menu-horizontal-line"
+             [class.opacity-100]="selectedCategoryId == categories.MEDIA"></i>
+        </div>
+      </div>
+
+      <div class="col p-0 nav-item cursor-pointer hover-effect position-relative h-100 d-flex align-items-center justify-content-center"
+           (click)="onClickNavItem(categories.FILES)">
+        <div class="d-flex flex-column justify-content-center position-relative">
+          <span class="font-16 line-h21px mt-auto font-weight-500 secondary-text-color" [class.menu-horizontal-active]="selectedCategoryId == categories.FILES">Files</span>
+          <i class="w-100 position-absolute start-0 menu-horizontal-line"
+             [class.opacity-100]="selectedCategoryId == categories.FILES"></i>
+        </div>
+      </div>
+
+      <div class="col p-0 nav-item cursor-pointer hover-effect position-relative h-100 d-flex align-items-center justify-content-center"
+           (click)="onClickNavItem(categories.LINKS)">
+        <div class="d-flex flex-column justify-content-center position-relative">
+          <span class="font-16 line-h21px mt-auto font-weight-500 secondary-text-color" [class.menu-horizontal-active]="selectedCategoryId == categories.LINKS">Links</span>
+          <i class="w-100 position-absolute start-0 menu-horizontal-line"
+             [class.opacity-100]="selectedCategoryId == categories.LINKS"></i>
+        </div>
+      </div>
+
+      <div class="col p-0 nav-item cursor-pointer hover-effect position-relative h-100 d-flex align-items-center justify-content-center"
+           (click)="onClickNavItem(categories.VOICE)">
+        <div class="d-flex flex-column justify-content-center position-relative">
+          <span class="font-16 line-h21px mt-auto font-weight-500 secondary-text-color" [class.menu-horizontal-active]="selectedCategoryId == categories.VOICE">Voice</span>
+          <i class="w-100 position-absolute start-0 menu-horizontal-line"
+             [class.opacity-100]="selectedCategoryId == categories.VOICE"></i>
+        </div>
+      </div>
+
+      <div class="col p-0 nav-item cursor-pointer hover-effect position-relative h-100 d-flex align-items-center justify-content-center"
+           (click)="onClickNavItem(categories.GROUPS)">
+        <div class="d-flex flex-column justify-content-center position-relative">
+          <span class="font-16 line-h21px mt-auto font-weight-500 secondary-text-color" [class.menu-horizontal-active]="selectedCategoryId == categories.GROUPS">Groups</span>
+          <i class="w-100 position-absolute start-0 menu-horizontal-line"
+             [class.opacity-100]="selectedCategoryId == categories.GROUPS"></i>
+        </div>
+      </div>
+    </nav>
+
+    <div class="mw-100" style="min-height: calc(100vh - 104px)">
+      <ng-container *ngIf="selectedCategoryId == categories.MEDIA">
+        <app-chat-media></app-chat-media>
+      </ng-container>
+      <ng-container *ngIf="selectedCategoryId == categories.FILES">
+        <app-chat-files></app-chat-files>
+      </ng-container>
+      <ng-container *ngIf="selectedCategoryId == categories.LINKS">
+        <app-chat-links></app-chat-links>
+      </ng-container>
+      <ng-container *ngIf="selectedCategoryId == categories.VOICE">
+        <app-chat-voices></app-chat-voices>
+      </ng-container>
+      <ng-container *ngIf="selectedCategoryId == categories.GROUPS">
+        <app-chat-groups></app-chat-groups>
+      </ng-container>
+    </div>
+  </div>
+</ngx-simplebar>

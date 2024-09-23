@@ -1,0 +1,219 @@
+<div #boundary [style.width.px]="boundaryWidth" [style.height.px]="boundaryHeight" [style.left.px]="boundaryLeftOffset"
+     [style.top.px]="boundaryTopOffset"
+     class="position-absolute"></div>
+
+<div class="d-flex flex-column h-100">
+  <div class="d-flex justify-content-between ps-20px align-items-center fixed-top" style="min-height: 56px">
+    <div class="d-flex hover-opacity">
+      <div class="d-flex align-items-center me-3">
+        <img class="rounded-5" src="/54x54.jpg" alt="Profile Pic" width="42" height="42">
+      </div>
+      <div class="p-1 flex-grow-1 d-flex flex-column text-white">
+        <span class="font-16 font-weight-500" style="line-height: 1.31">Mohammed Younis</span>
+        <span class="font-14 " style="line-height: 1.31">May 11, 2023 at 23:48</span>
+      </div>
+    </div>
+    <div class="d-flex gap-1 media-viewer-buttons">
+      <ng-container *ngIf="source === 'media'">
+        <button
+          class="btn border-0 p-2 radius-50 hover-opacity btn-icon d-flex align-items-center justify-content-center"
+          (click)="openConfirm()"><span class="tgico text-white"></span></button>
+        <button
+          class="btn border-0 p-2 radius-50 hover-opacity btn-icon d-flex align-items-center justify-content-center"
+          (click)="openForward()"><span class="tgico text-white"></span></button>
+      </ng-container>
+
+      <button
+        class="btn border-0 p-2 radius-50 hover-opacity btn-icon d-flex align-items-center justify-content-center">
+        <span class="tgico text-white"></span>
+      </button>
+      <button
+        class="btn border-0 p-2 radius-50 hover-opacity btn-icon d-flex align-items-center justify-content-center"
+        (click)="doZoom()">
+        <span class="tgico text-white">{{zoomEnabled ? '' : ''}}</span>
+      </button>
+      <button
+        class="btn border-0 p-2 radius-50 hover-opacity btn-icon d-flex align-items-center justify-content-center"
+        (click)="modal.close()"><span class="tgico text-white"></span></button>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center h-100vh position-relative">
+
+    <div class="d-flex h-100 align-items-center justify-content-center " style="margin-bottom: 56px;"
+         *ngIf="current > 0">
+      <button class="btn bg-transparent border-0 w-100 h-100 hover-show" (click)="slide(-1)">
+        <span class="tgico text-white font-48 font-weight-400"></span>
+      </button>
+    </div>
+
+    <div class="w-100 h-100" (click)="backDropClick()"></div>
+
+    <div class="d-flex h-100 align-items-center justify-content-center" style=" margin-bottom: 56px;"
+         *ngIf="current < images.length - 1">
+      <button class="btn bg-transparent border-0 w-100 h-100 hover-show" (click)="slide(1)">
+        <span class="tgico text-white font-48 font-weight-400"></span>
+      </button>
+    </div>
+
+
+    <img class="position-absolute object-fit-contain" [class.mw-100]="!zoomEnabled" alt=""
+         style="{{zoomEnabled ? '' : 'max-height: calc(100% - 240px); min-height: 19.35%;'}}"
+         *ngIf="images[current].type.startsWith('image')"
+         [src]="images[current].media" cdkDrag [cdkDragFreeDragPosition]="dragPosition"
+         [width]="initialWidth * scale" [cdkDragDisabled]="!zoomEnabled" [cdkDragBoundary]="boundary" #imgRef="cdkDrag">
+
+    <div class="position-absolute position-relative view-wrapper"
+         *ngIf="images[current].type.startsWith('video')" cdkDrag [cdkDragFreeDragPosition]="dragPosition"
+         [style.width.px]="initialWidth * scale" [cdkDragDisabled]="!zoomEnabled" [cdkDragBoundary]="boundary"
+         [style.height.px]="initialHeight * scale" #wrapper="cdkDrag">
+      <video [autoplay]="true" [muted]="isMuted" preload="metadata" [controls]="false"
+             (timeupdate)="onVideoTimeUpdate()" (progress)="onVideoProgress()" (dblclick)="toggleFullScreen()"
+             (loadedmetadata)="onLoadedMetadata()" (click)="togglePlay()" (canplay)="isLoadingVideo = false;" (waiting)="isLoadingVideo = true;" (playing)="isLoadingVideo = false;"
+             playsinline [controlsList]="'nodownload'" #videoElement
+             class="object-fit-contain video-element w-100 h-100 cursor-pointer"
+             [class.video-element-hover]="!zoomEnabled">
+        <source [src]="images[current].media"
+                [type]="images[current].type">
+      </video>
+      <div class="position-absolute top-50 start-50" *ngIf="!zoomEnabled">
+        <button *ngIf="videoPaused"
+          class="btn bg-transparent border-0 d-flex justify-content-center align-items-center big-play-btn"
+          (click)="togglePlay()">
+          <span class="tgico text-white font-64"></span>
+        </button>
+        <button  *ngIf="!videoPaused && isLoadingVideo"
+          class="btn bg-transparent border-0 d-flex justify-content-center align-items-center big-play-btn preloader-container p-0" >
+            <div class="you-spin-me-round w-100 h-100">
+              <svg xmlns="http://www.w3.org/2000/svg" class="preloader-circular radius-50 w-100 h-100 position-absolute m-auto" viewBox="25 25 50 50">
+                <circle class="preloader-path-new" cx="50" cy="50" r="19" fill="none" stroke-miterlimit="10"></circle>
+              </svg>
+            </div>
+        </button>
+
+      </div>
+      <div class="position-absolute position-relative bottom-0 w-100 controls-container z-3"
+           [class.d-none]="!videoPaused || zoomEnabled">
+        <div class="progress-line position-relative my-0 mx-3 cursor-pointer" [class.is-focused]="isMouseDown"
+             (mousedown)="onProgressMouseDown($event)" (mousemove)="onProgressMouseMove($event)"
+             (mouseup)="onProgressMouseUp($event)">
+          <div class="position-absolute top-0 bottom-0 progress-line-loaded" [style.width.%]="loadedPercentage"></div>
+          <div class="position-absolute top-0 bottom-0 mw-100 progress-line-filled"
+               [style.width.%]="filledPercentage"></div>
+          <input class="bg-transparent progress-line-seek w-100 cursor-pointer p-0 m-0 position-absolute" type="range"
+                 step="0.016666666666666666" min="0">
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between " style="height: 2.25rem; padding-inline: 10px">
+          <div class="d-flex align-items-center">
+            <button
+              class="btn bg-transparent border-0 p-2 d-flex justify-content-center align-items-center btn-icon radius-50"
+              (click)="togglePlay()">
+              <span class="tgico text-white">{{videoPaused ? ''  : ''}}</span>
+            </button>
+
+            <button class="btn bg-transparent border-0 d-flex justify-content-center align-items-center volume-btn"
+                    (click)="toggleMute()" style="padding: 6px">
+              <span *ngIf="!isMuted && volume >= 0.5" class="tgico text-white me-2"></span>
+              <span *ngIf="!isMuted && volume >= 0.25 && volume < 0.5" class="tgico text-white me-2"></span>
+              <span *ngIf="!isMuted && volume > 0 && volume < 0.25" class="tgico text-white me-2"></span>
+              <span *ngIf="isMuted || volume === 0" class="tgico text-white me-2"></span>
+            </button>
+            <div class="d-flex align-items-center d-none volume-slider" style="height: 18px; width: 50px">
+              <input type="range" [value]="volume" [min]="0" [max]="1" class="zoom-range" step="0.01"
+                     (input)="changeVolume($event)">
+            </div>
+            <span class="ms-2 font-14 font-weight-400 text-white"><time>{{formatSecondsAsTime(videoCurrentTime)}}</time> / <time>{{formatSecondsAsTime(videoDuration)}}</time></span>
+          </div>
+
+
+          <div class="d-flex align-items-center">
+            <div ngbDropdown placement="top-end" (openChange)="onChangeRateDropdown($event)"
+                 #rateDropDown="ngbDropdown">
+              <button type="button"
+                      class="btn bg-transparent border-0 p-2 d-flex justify-content-center align-items-center font-weight-500 btn-icon radius-50"
+                      [class.opened]="rateDropdownOpened" [class.btn-icon-active]="rateDropdownOpened"
+                      id="playRateDropdown" ngbDropdownToggle>
+                  <span class="tgico text-white" *ngIf="videoElement.playbackRate === 0.5"></span>
+                  <span class="tgico text-white" *ngIf="videoElement.playbackRate === 1"></span>
+                  <span class="tgico text-white" *ngIf="videoElement.playbackRate === 1.5"></span>
+                  <span class="tgico text-white" *ngIf="videoElement.playbackRate === 2"></span>
+              </button>
+              <div ngbDropdownMenu aria-labelledby="playRateDropdown" #rateDropDownElementRef
+                   class="position-absolute font-14 line-h18px rate-menu radius-10px">
+                <div class="cursor-pointer hover-effect dropdown-menu-item text-white font-weight-500 active-none radius-5px d-flex align-items-center"
+                     ngbDropdownItem
+                     (click)="changeSpeed(0.5)">0.5x
+                </div>
+                <div class="cursor-pointer hover-effect dropdown-menu-item text-white font-weight-500 active-none radius-5px d-flex align-items-center"
+                     ngbDropdownItem
+                     (click)="changeSpeed(1)">1x
+                </div>
+                <div class="cursor-pointer hover-effect dropdown-menu-item text-white font-weight-500 active-none radius-5px d-flex align-items-center"
+                     ngbDropdownItem
+                     (click)="changeSpeed(1.5)">1.5x
+                </div>
+                <div class="cursor-pointer hover-effect dropdown-menu-item text-white font-weight-500 active-none radius-5px d-flex align-items-center"
+                     ngbDropdownItem
+                     (click)="changeSpeed(2)">2x
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="btn bg-transparent border-0 p-2 d-flex justify-content-center align-items-center btn-icon radius-50"
+              (click)="requestPIP()">
+              <span class="tgico text-white"></span>
+            </button>
+            <button
+              class="btn bg-transparent border-0 p-2 d-flex justify-content-center align-items-center btn-icon radius-50"
+              (click)="toggleFullScreen()">
+              <span class="tgico text-white">{{isFullScreen ? '' : ''}}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div *ngIf="zoomEnabled"
+         class="fixed-bottom w-100 d-flex justify-content-center zoom-range-container align-items-center">
+      <div class="zoom-range-parent d-flex align-items-center ">
+        <button class="btn bg-transparent border-0 p-2 d-flex justify-content-center align-items-center"
+                [disabled]="scale === (images[current].type.startsWith('video') ? 1 : 0.5)"
+                (click)="onClickZoom(-0.5)">
+          <span class="tgico text-white"></span>
+        </button>
+        <div class="d-flex align-items-center" style="height: 18px">
+          <input type="range" [(ngModel)]="scale" [min]="images[current].type.startsWith('video') ? 1 : 0.5" [max]="4"
+                 class="zoom-range" step="0.1" (input)="onInputZoom()">
+        </div>
+        <button class="btn bg-transparent border-0 p-2 d-flex justify-content-center align-items-center"
+                [disabled]="scale === 4" (click)="onClickZoom(0.5)">
+          <span class="tgico text-white"></span>
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="fixed-bottom w-100 d-flex justify-content-center align-items-center media-viewer-caption text-break overflow-hidden px-2 pt-2 line-h21px text-white"
+      [class.d-none]="zoomEnabled">
+      <div class="py-2 hide-scrollbar scrollable w-100 text-center overflow-y-scroll">
+        "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized
+        by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble
+        that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will,
+        which
+        is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to
+        distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able
+        to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances
+        and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to
+        be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle
+        of
+        selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse
+        pains."
+      </div>
+    </div>
+  </div>
+</div>
+

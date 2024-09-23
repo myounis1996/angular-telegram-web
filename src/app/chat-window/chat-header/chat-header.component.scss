@@ -1,0 +1,33 @@
+.chat-info-padding {
+  padding: 2px 0 2px 3px;
+}
+
+.chat-name-header {
+  padding-left: 18px;
+}
+
+.dots-menu {
+  z-index: 2;
+  min-width: 180px;
+  width: max-content;
+  top: 13px !important;
+  padding: 5px 0;
+}
+
+.pinned-container-wrapper {
+  min-width: 16rem;
+}
+
+.me-12px {
+  margin-inline-end: 12px;
+}
+
+.media-photo {
+  border-radius: 3px;
+}
+
+.strip {
+  margin-bottom: 1px;
+  border-radius: 1px;
+  min-height: 8px !important;
+}

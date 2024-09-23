@@ -1,0 +1,43 @@
+.left-30 {
+  left: 30%
+}
+
+input {
+  --c: var(--primary-color); /* active color */
+  --l: 1px; /* line thickness*/
+  --h: 12px; /* thumb height */
+  --w: 12px; /* thumb width */
+  --_c: color-mix(in srgb, var(--c), #000 var(--p,0%));
+  -webkit-appearance :none;
+  -moz-appearance :none;
+  appearance :none;
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+
+/* chromium */
+input[type="range" i]::-webkit-slider-thumb{
+  height: var(--h);
+  width: var(--w);
+  background: var(--_c);
+  border-radius: 50%;
+  border-image: linear-gradient(90deg,var(--_c) 50%, var(--light-secondary-color) 0) 0 1/calc(50% - var(--l)/2) 100vw/0 100vw;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: .3s;
+}
+/* Firefox */
+input[type="range"]::-moz-range-thumb {
+  background: var(--_c);
+  border-radius: 50%;
+  border-image: linear-gradient(90deg,var(--_c) 50%, var(--light-secondary-color) 0) 0 1/calc(50% - var(--l)/2) 100vw/0 100vw;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: .3s;
+}
+
+.side-month-padding {
+  padding: 20px 15px 0 20px;
+}
