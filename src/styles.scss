@@ -525,6 +525,11 @@ input {
   background-color: transparent;
   border: none;
 }
+@media (max-width: 1200px) {
+  .container {
+    max-width: 100%;
+  }
+}
 
 @media (min-width: 1200px) {
   .container {

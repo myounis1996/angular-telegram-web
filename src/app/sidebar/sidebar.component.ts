@@ -15,7 +15,25 @@ export class SidebarComponent {
   selectedChatId = -1;
   @ViewChild('foldersElement', {static: false}) foldersElement: ElementRef<HTMLElement> = {} as ElementRef;
   @ViewChild('darkModeIcon') darkModeIcon!: ElementRef<HTMLElement>;
-
+  folders = ["All", "FOLDER1", "FOLDER2", "FOLDER3", "FOLDER4", "FOLDER5"];
+  chats = [
+    {
+      id: 1,
+      username: "Username 1",
+      lastMsgTime: "10:25",
+      newMsgCount: 25,
+      img: "/54x54.jpg",
+      lastMsg: "which is the same as saying through shrinking from toil and pain",
+    },
+    {
+      id: 2,
+      username: "Username 2",
+      lastMsgTime: "10:13",
+      newMsgCount: 15,
+      img: "/svg/300x50.svg",
+      lastMsg: "which is the same as saying through shrinking from toil and pain",
+    }
+  ]
   constructor(protected toggleModeService: ToggleModeService, protected animationService: ToggleAnimationService, private renderer: Renderer2) {
     this.renderer.setAttribute(document.querySelector('html'), 'data-bs-theme', toggleModeService.currentModeValue);
   }

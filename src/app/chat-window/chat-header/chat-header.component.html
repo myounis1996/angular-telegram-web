@@ -17,7 +17,7 @@
   </div>
   <div class="d-flex justify-content-between py-2" >
     <!--  Pinned Messages Container  -->
-    <div class="me-2 w-auto d-flex">
+    <div class="d-none d-lg-flex me-2 w-auto ">
       <button class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50 me-12px"><span class="tgico button-icon"></span></button>
       <div class="pinned-container-wrapper p-1 d-flex" (click)="goToNextPinned()">
         <div style="min-width: 2px !important; height: 40px" class="d-flex flex-column overflow-hidden overflow-y-scroll hide-scrollbar">
@@ -36,29 +36,29 @@
     </div>
     <!--  Pinned Messages List Button-->
     <button
-      class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50 ms-2">
+      class="btn btn-icon p-2 d-none d-lg-flex align-items-center justify-content-center border-0 radius-50 ms-2">
       <span class="tgico button-icon"></span>
     </button>
     <!--  Call Button-->
     <button
-      class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50 ms-2">
+      class="btn btn-icon p-2 d-none d-lg-flex align-items-center justify-content-center border-0 radius-50 ms-2">
       <span class="tgico button-icon"></span>
     </button>
     <!--  Stream Button-->
     <button
-      class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50 ms-2">
+      class="btn btn-icon p-2 d-none d-lg-flex align-items-center justify-content-center border-0 radius-50 ms-2">
       <span class="tgico button-icon"></span>
     </button>
     <!--  Notification Button-->
     <button
-      class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50 ms-2"
+      class="btn btn-icon p-2 d-none d-lg-flex align-items-center justify-content-center border-0 radius-50 ms-2"
       (click)="isMuted = !isMuted">
       <span class="tgico button-icon" *ngIf="!isMuted"></span>
       <span class="tgico button-icon" *ngIf="isMuted"></span>
     </button>
     <!--  Search Button-->
     <button
-      class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50 ms-2">
+      class="btn btn-icon p-2 d-none d-lg-flex align-items-center justify-content-center border-0 radius-50 ms-2">
       <span class="tgico button-icon"></span>
     </button>
     <!--  Dropdown Menu Button-->
@@ -69,6 +69,10 @@
         <span class="tgico button-icon"></span>
       </button>
       <div class="position-absolute dots-menu radius-10px border-0" ngbDropdownMenu>
+        <div class="d-flex d-lg-none dropdown-menu-item align-items-center">
+          <span class="tgico btn-menu-item-icon font-20"></span>
+          <span class="primary-text-color font-14 font-weight-500">Search</span>
+        </div>
         <div class="d-flex flex-row dropdown-menu-item align-items-center">
           <span class="tgico btn-menu-item-icon font-20">{{isMuted ? "" : ""}}</span>
           <span class="primary-text-color font-14 font-weight-500">{{isMuted ? "Unmute" : "Mute"}}</span>
@@ -80,6 +84,14 @@
         <div class="d-flex flex-row dropdown-menu-item align-items-center">
           <span class="tgico btn-menu-item-icon font-20"></span>
           <span class="primary-text-color font-14 font-weight-500">Select Messages</span>
+        </div>
+        <div class="d-flex flex-row dropdown-menu-item align-items-center">
+          <span class="tgico btn-menu-item-icon font-20"></span>
+          <span class="primary-text-color font-14 font-weight-500">View discussion</span>
+        </div>
+        <div class="d-flex d-lg-none flex-row dropdown-menu-item align-items-center">
+          <span class="tgico btn-menu-item-icon font-20"></span>
+          <span class="primary-text-color font-14 font-weight-500">Video Chat</span>
         </div>
         <div class="d-flex flex-row dropdown-menu-item align-items-center">
           <span class="tgico btn-menu-item-icon font-20"></span>

@@ -94,92 +94,18 @@
   <nav
     class="position-relative d-flex flex-row overflow-x-auto menu-horizontal-div overflow-y-hidden w-100 hide-scrollbar border-bottom border-1 secondary-text-color"
     (wheel)="onFolderScroll($event)" #foldersElement style="padding-left: .6875rem;">
-    <div
+    <div *ngFor="let folder of folders; let i = index"
       class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
-      (click)="selectedFolderId = 0">
+      (click)="selectedFolderId = i" >
       <div class="d-flex flex-column justify-content-center position-relative">
         <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
-              [class.menu-horizontal-active]="selectedFolderId == 0">
-          All Chats
+              [class.menu-horizontal-active]="selectedFolderId == i">
+          {{ folder }}
           <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500"
-                [class.primary-bg]="selectedFolderId == 0" style="padding-inline: 6px; margin-left: 5px"></span>
+                [class.primary-bg]="selectedFolderId == i" style="padding-inline: 6px; margin-left: 5px"></span>
         </span>
         <i class="w-100 position-absolute start-0 menu-horizontal-line"
-           [class.opacity-100]="selectedFolderId == 0"></i>
-      </div>
-    </div>
-
-    <div
-      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
-      (click)="selectedFolderId = 1">
-      <div class="d-flex flex-column justify-content-center position-relative">
-        <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
-              [class.menu-horizontal-active]="selectedFolderId == 1">
-          CC
-          <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500 py-0"
-                [class.primary-bg]="selectedFolderId == 1" style="padding-inline: 6px; margin-left: 5px">25</span>
-        </span>
-        <i class="w-100 position-absolute start-0 menu-horizontal-line"
-           [class.opacity-100]="selectedFolderId == 1"></i>
-      </div>
-    </div>
-
-    <div
-      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px "
-      (click)="selectedFolderId = 2">
-      <div class="d-flex flex-column justify-content-center position-relative">
-        <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
-              [class.menu-horizontal-active]="selectedFolderId == 2">
-          FOLDER
-          <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500 py-0"
-                [class.primary-bg]="selectedFolderId == 2" style="padding-inline: 6px; margin-left: 5px"></span>
-        </span>
-        <i class="w-100 position-absolute start-0 menu-horizontal-line"
-           [class.opacity-100]="selectedFolderId == 2"></i>
-      </div>
-    </div>
-
-    <div
-      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
-      (click)="selectedFolderId = 3">
-      <div class="d-flex flex-column justify-content-center position-relative">
-        <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
-              [class.menu-horizontal-active]="selectedFolderId == 3">
-          FOLDER
-          <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500 py-0"
-                [class.primary-bg]="selectedFolderId == 3" style="padding-inline: 6px; margin-left: 5px">15</span>
-        </span>
-        <i class="w-100 position-absolute start-0 menu-horizontal-line"
-           [class.opacity-100]="selectedFolderId == 3"></i>
-      </div>
-    </div>
-
-    <div
-      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
-      (click)="selectedFolderId = 4">
-      <div class="d-flex flex-column justify-content-center position-relative">
-        <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
-              [class.menu-horizontal-active]="selectedFolderId == 4">
-          Personal
-          <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500 py-0"
-                [class.primary-bg]="selectedFolderId == 4" style="padding-inline: 6px; margin-left: 5px">600</span>
-        </span>
-        <i class="w-100 position-absolute start-0 menu-horizontal-line"
-           [class.opacity-100]="selectedFolderId == 4"></i>
-      </div>
-    </div>
-    <div
-      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
-      (click)="selectedFolderId = 5">
-      <div class="d-flex flex-column justify-content-center position-relative">
-        <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
-              [class.menu-horizontal-active]="selectedFolderId == 5">
-        Unread
-          <span class="badge rounded-pill secondary-bg text-white font-14 font-weight-500 py-0"
-                [class.primary-bg]="selectedFolderId == 5" style="padding-inline: 6px; margin-left: 5px"></span>
-        </span>
-        <i class="w-100 position-absolute start-0 menu-horizontal-line"
-           [class.opacity-100]="selectedFolderId == 5"></i>
+           [class.opacity-100]="selectedFolderId == i"></i>
       </div>
     </div>
   </nav>
@@ -187,60 +113,33 @@
   <div class="position-relative p-2 overflow-x-hidden overflow-y-scroll default-scrollbar"
        style="height: calc(100% - 104px)">
     <div class="d-flex flex-column align-items-center">
-      <div class="d-flex sidebar-chat hover-effect align-items-center w-100 radius-10px"
-           [class.primary-bg]="selectedChatId === 0"
-           (click)="selectedChatId = 0">
+      <div *ngFor="let chat of chats;" class="d-flex sidebar-chat hover-effect align-items-center w-100 radius-10px"
+           [class.primary-bg]="selectedChatId === chat.id"
+           (click)="selectedChatId = chat.id">
         <div class="avatar-gradient radius-50" style="margin-inline: 9px">
-          <img class="rounded-5" src="/54x54.jpg" alt="Profile Pic" width="54" height="54">
+          <img class="rounded-5" [src]="chat.img" alt="Profile Pic" width="54" height="54">
         </div>
         <div class="text-nowrap d-flex flex-column" style="max-width: 80%">
           <div class="d-flex justify-content-between row-title">
             <div
               class="d-flex align-items-center font-16 overflow-ellipsis text-white font-weight-500 primary-text-color flex-grow-1 flex-shrink-1">
-              Username 1<span class="tgico font-18 dialog-muted-icon"
-                                    [style.color]="selectedChatId === 0 ? '#ffffffb3': ''"></span>
+              {{ chat.username }}<span class="tgico font-18 dialog-muted-icon"
+                                    [style.color]="selectedChatId === chat.id ? '#ffffffb3': ''"></span>
             </div>
             <div class="font-12 flex-grow-0 flex-shrink-0 ms-2"
-                 [ngClass]="{'text-white' : selectedChatId === 0, 'secondary-text-color': selectedChatId !== 0}">10:25
+                 [ngClass]="{'text-white' : selectedChatId === chat.id, 'secondary-text-color': selectedChatId !== chat.id}">
+              {{ chat.lastMsgTime }}
             </div>
           </div>
           <div class="d-flex flex-row justify-content-between ">
             <div class="overflow-ellipsis font-16 "
-                 [ngClass]="{'text-white' : selectedChatId === 0, 'secondary-text-color': selectedChatId !== 0}">
-              which is the same as saying through shrinking from toil and pain
+                 [ngClass]="{'text-white' : selectedChatId === chat.id, 'secondary-text-color': selectedChatId !== chat.id}">
+              {{ chat.lastMsg }}
             </div>
             <div class="ms-2">
               <span class="badge rounded-pill secondary-bg"
-                    [ngClass]="{'text-bg-light primary-color' : selectedChatId === 0, 'text-white': selectedChatId !== 0}">25</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="d-flex sidebar-chat hover-effect align-items-center w-100 radius-10px"
-           [class.primary-bg]="selectedChatId === 1"
-           (click)="selectedChatId = 1">
-        <div class="avatar-gradient radius-50" style="margin-inline: 9px">
-          <img class="rounded-5" src="/54x54.jpg" alt="Profile Pic" width="54" height="54">
-        </div>
-        <div class="text-nowrap d-flex flex-column" style="max-width: 80%">
-          <div class="d-flex justify-content-between row-title">
-            <div
-              class="d-flex align-items-center font-16 overflow-ellipsis text-white font-weight-500 primary-text-color flex-grow-1 flex-shrink-1">
-              Username 1<span class="tgico font-18 dialog-muted-icon"
-                              [style.color]="selectedChatId === 1 ? '#ffffffb3': ''"></span>
-            </div>
-            <div class="font-12 flex-grow-0 flex-shrink-0 ms-2"
-                 [ngClass]="{'text-white' : selectedChatId === 1, 'secondary-text-color': selectedChatId !== 1}">10:25
-            </div>
-          </div>
-          <div class="d-flex flex-row justify-content-between ">
-            <div class="overflow-ellipsis font-16 "
-                 [ngClass]="{'text-white' : selectedChatId === 1, 'secondary-text-color': selectedChatId !== 1}">
-              which is the same as saying through shrinking from toil and pain
-            </div>
-            <div class="ms-2">
-              <span class="badge rounded-pill secondary-bg"
-                    [ngClass]="{'text-bg-light primary-color' : selectedChatId === 1, 'text-white': selectedChatId !== 1}">25</span>
+                    [ngClass]="{'text-bg-light primary-color' : selectedChatId === chat.id, 'text-white': selectedChatId !== chat.id}">
+                {{ chat.newMsgCount }}</span>
             </div>
           </div>
         </div>
