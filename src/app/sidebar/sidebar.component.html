@@ -95,8 +95,8 @@
     class="position-relative d-flex flex-row overflow-x-auto menu-horizontal-div overflow-y-hidden w-100 hide-scrollbar border-bottom border-1 secondary-text-color"
     (wheel)="onFolderScroll($event)" #foldersElement style="padding-left: .6875rem;">
     <div *ngFor="let folder of folders; let i = index"
-      class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
-      (click)="selectedFolderId = i" >
+         class="position-relative px-3 nav-item h-100 d-flex align-items-center cursor-pointer hover-effect radius-top-10px"
+         (click)="selectedFolderId = i">
       <div class="d-flex flex-column justify-content-center position-relative">
         <span class="font-16 line-h21px text-nowrap mt-auto font-weight-500 secondary-text-color"
               [class.menu-horizontal-active]="selectedFolderId == i">
@@ -115,36 +115,39 @@
     <div class="d-flex flex-column align-items-center">
       <div *ngFor="let chat of chats;" class="d-flex sidebar-chat hover-effect align-items-center w-100 radius-10px"
            [class.primary-bg]="selectedChatId === chat.id"
-           (click)="selectedChatId = chat.id">
+           (click)="selectedChatId = chat.id" routerLink="/{{chat.username}}">
         <div class="avatar-gradient radius-50" style="margin-inline: 9px">
           <img class="rounded-5" [src]="chat.img" alt="Profile Pic" width="54" height="54">
         </div>
-        <div class="text-nowrap d-flex flex-column" style="max-width: 80%">
-          <div class="d-flex justify-content-between row-title">
-            <div
-              class="d-flex align-items-center font-16 overflow-ellipsis text-white font-weight-500 primary-text-color flex-grow-1 flex-shrink-1">
-              {{ chat.username }}<span class="tgico font-18 dialog-muted-icon"
-                                    [style.color]="selectedChatId === chat.id ? '#ffffffb3': ''"></span>
+        <div class="overflow-hidden text-nowrap d-flex flex-column w-100 p-2">
+          <div class="d-flex justify-content-between align-items-center w-100">
+            <div class="d-flex align-items-center overflow-hidden text-white font-weight-500 flex-grow-1">
+              <span class="text-truncate overflow-hidden username" style="white-space: nowrap;">
+                {{ chat.username }}
+              </span>
+              <span class="tgico font-18 dialog-muted-icon ms-1 flex-shrink-0"
+                    [style.color]="selectedChatId === chat.id ? '#ffffffb3' : ''"></span>
             </div>
-            <div class="font-12 flex-grow-0 flex-shrink-0 ms-2"
+            <div class="font-12 ms-auto flex-shrink-0 last-msg-time"
                  [ngClass]="{'text-white' : selectedChatId === chat.id, 'secondary-text-color': selectedChatId !== chat.id}">
               {{ chat.lastMsgTime }}
             </div>
           </div>
-          <div class="d-flex flex-row justify-content-between ">
-            <div class="overflow-ellipsis font-16 "
-                 [ngClass]="{'text-white' : selectedChatId === chat.id, 'secondary-text-color': selectedChatId !== chat.id}">
+          <div class="d-flex justify-content-between align-items-center w-100 mt-1">
+            <div class="font-16 text-truncate overflow-hidden text-truncate flex-grow-1"
+                 [ngClass]="{'text-white' : selectedChatId === chat.id, 'secondary-text-color': selectedChatId !== chat.id}"
+                 style="white-space: nowrap;">
               {{ chat.lastMsg }}
             </div>
-            <div class="ms-2">
-              <span class="badge rounded-pill secondary-bg"
-                    [ngClass]="{'text-bg-light primary-color' : selectedChatId === chat.id, 'text-white': selectedChatId !== chat.id}">
-                {{ chat.newMsgCount }}</span>
+            <div class="ms-2 flex-shrink-0">
+                <span class="badge rounded-pill secondary-bg"
+                      [ngClass]="{'text-bg-light primary-color' : selectedChatId === chat.id, 'text-white': selectedChatId !== chat.id}">
+                  {{ chat.newMsgCount }}
+                </span>
             </div>
           </div>
         </div>
       </div>
-
     </div>
     <div class="position-absolute btn-corner" ngbDropdown #newChatDropdown="ngbDropdown">
       <button

@@ -22,6 +22,7 @@ import { ForwardMessageModalComponent } from './Modals/forward-message-modal/for
 import {CdkMenuModule} from '@angular/cdk/menu';
 import { ChatHeaderComponent } from './chat-window/chat-header/chat-header.component';
 import { ChatSideComponent } from './chat-window/chat-side/chat-side.component';
+import {ChatBackgroundComponent} from "./chat-background/chat-background.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,8 @@ import { ChatSideComponent } from './chat-window/chat-side/chat-side.component';
     DeleteMessageModalComponent,
     ForwardMessageModalComponent,
     ChatHeaderComponent,
-    ChatSideComponent
+    ChatSideComponent,
+    ChatBackgroundComponent
   ],
   imports: [
     BrowserModule,
