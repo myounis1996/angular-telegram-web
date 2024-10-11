@@ -18,7 +18,8 @@ export class ChatWindowComponent implements AfterViewInit {
   canScrollToBottom = false;
   isMobile = false;
   constructor(private modalService: NgbModal, private animationService: ToggleAnimationService) {
-    this.messageSelection.select()
+    this.messageSelection.select();
+    this.checkScreenSize();
   }
 
   ngAfterViewInit() {

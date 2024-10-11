@@ -32,7 +32,7 @@
                [style.opacity]="i === activePinnedIndex ? '1': '0.4'" id="pinned_{{i}}"></div>
         </div>
         <div class="ms-1 d-flex">
-          <img class="media-photo" src="/svg/2048x800.svg" width="32" height="32">
+          <img class="media-photo" src="/svg/2048x800.svg" width="32" height="32" alt="pinned media">
           <div class="d-flex flex-column ms-2">
             <span class="primary-color font-weight-400 font-14 line-h18px mb-1" style="height: 16px; margin-top: -2px;">Pinned Message
               {{ activePinnedIndex !== pinnedMessages.length - 1 ? "#" + (activePinnedIndex + 1) : "" }}</span>
