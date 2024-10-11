@@ -1,11 +1,12 @@
 <div class="container h-100 inline-border">
-    <div class="row h-100">
-      <div class="col-lg-3 h-100 surface-bg p-0 position-relative column-left">
-        <app-sidebar></app-sidebar>
+    <div class="row h-100 ">
+      <div class="col-lg-3 h-100 surface-bg p-0 position-relative column-left" [class.d-none]="isMobile && hasChatOpened">
+        <app-sidebar [selectedChatId]="selectedChatId"></app-sidebar>
       </div>
-      <div class="col-lg-9 h-100 position-relative">
-        <app-chat-background></app-chat-background>
+      <div class="col-lg-9 h-100 position-relative" [class.d-none]="isMobile && !hasChatOpened">
+        <app-chat-background *ngIf="!isMobile || (isMobile && hasChatOpened)"></app-chat-background>
         <router-outlet/>
       </div>
     </div>
 </div>
+

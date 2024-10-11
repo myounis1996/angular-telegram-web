@@ -3,17 +3,18 @@
     <div class="d-flex w-100">
       <button *ngIf="searchFocused" type="button"
               class="d-flex btn-icon sidebar-back-button text-center line-h16px radius-50 secondary-text-color bg-transparent border-0 p-2 position-relative align-items-center justify-content-center"
-              style="min-width: 18px">
+              style="min-width: 18px" aria-label="Back">
         <div class="position-relative back-btn"></div>
       </button>
       <div *ngIf="!searchFocused" class="position-relative align-self-center text-center" ngbDropdown
            (openChange)="menuToggle($event)"
            placement="bottom-start">
         <button class="bg-transparent border-0 btn-icon radius-50 p-2 d-flex align-items-center justify-content-center"
-                [class.btn-icon-active]="menuOpened" ngbDropdownToggle style="width: 40px; height: 40px">
+                [class.btn-icon-active]="menuOpened" ngbDropdownToggle style="width: 40px; height: 40px"
+                aria-label="Menu">
           <div class="position-absolute menu-icon"></div>
         </button>
-        <div class="position-absolute mt-2 btn-menu border-0" ngbDropdownMenu>
+        <div class="position-absolute mt-2 btn-menu border-0" ngbDropdownMenu style="z-index: 9">
           <div class="d-flex dropdown-menu-item align-items-center cursor-pointer">
             <span class="tgico btn-menu-item-icon font-20"></span>
             <span class="primary-text-color font-14 font-weight-500 line-h18px">Saved Messages</span>
@@ -114,15 +115,14 @@
        style="height: calc(100% - 104px)">
     <div class="d-flex flex-column align-items-center">
       <div *ngFor="let chat of chats;" class="d-flex sidebar-chat hover-effect align-items-center w-100 radius-10px"
-           [class.primary-bg]="selectedChatId === chat.id"
-           (click)="selectedChatId = chat.id" routerLink="/{{chat.username}}">
+           [class.primary-bg]="selectedChatId === chat.id" routerLink="/{{chat.id}}">
         <div class="avatar-gradient radius-50" style="margin-inline: 9px">
           <img class="rounded-5" [src]="chat.img" alt="Profile Pic" width="54" height="54">
         </div>
         <div class="overflow-hidden text-nowrap d-flex flex-column w-100 p-2">
           <div class="d-flex justify-content-between align-items-center w-100">
             <div class="d-flex align-items-center overflow-hidden text-white font-weight-500 flex-grow-1">
-              <span class="text-truncate overflow-hidden username" style="white-space: nowrap;">
+              <span class="text-truncate overflow-hidden primary-text-color" style="white-space: nowrap;">
                 {{ chat.username }}
               </span>
               <span class="tgico font-18 dialog-muted-icon ms-1 flex-shrink-0"
@@ -152,7 +152,7 @@
     <div class="position-absolute btn-corner" ngbDropdown #newChatDropdown="ngbDropdown">
       <button
         class="btn d-flex align-items-center justify-content-center primary-bg z-1 shadow-none radius-50 hover-dark-primary active-dark-primary border-0"
-        style="width: 54px; height: 54px" ngbDropdownToggle>
+        style="width: 54px; height: 54px" ngbDropdownToggle aria-label="New Chat">
         <span class="tgico text-white" *ngIf="!newChatDropdown.isOpen()"></span>
         <span class="tgico text-white" *ngIf="newChatDropdown.isOpen()"></span>
       </button>

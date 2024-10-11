@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, HostListener, ViewChild} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {SelectionModel} from "@angular/cdk/collections";
 import {DeleteMessageModalComponent} from "../Modals/delete-message-modal/delete-message-modal.component";
@@ -16,7 +16,7 @@ export class ChatWindowComponent implements AfterViewInit {
   isCollapsed = true;
   messageSelection = new SelectionModel<any>(true, []);
   canScrollToBottom = false;
-
+  isMobile = false;
   constructor(private modalService: NgbModal, private animationService: ToggleAnimationService) {
     this.messageSelection.select()
   }
@@ -29,6 +29,15 @@ export class ChatWindowComponent implements AfterViewInit {
       const bottom = element.scrollHeight - scrollTop - element.offsetHeight;
       this.canScrollToBottom = bottom > 300
     })
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth <= 992;
   }
 
   OnRightClick() {

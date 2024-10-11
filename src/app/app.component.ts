@@ -1,6 +1,6 @@
 import {Component, HostListener, inject} from '@angular/core';
-import {Router} from "@angular/router";
-import {SidebarComponent} from "./sidebar/sidebar.component";
+import {NavigationEnd, Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-root',
@@ -9,30 +9,30 @@ import {SidebarComponent} from "./sidebar/sidebar.component";
 })
 export class AppComponent {
   isMobile = false;
-  private router = inject(Router);
+  hasChatOpened = false;
+  router = inject(Router);
+  selectedChatId = -1;
 
   constructor() {
     this.checkScreenSize();
+    this.checkActivatedRoutePath();
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
+  onResize(event: any) {
     this.checkScreenSize();
   }
 
-  private checkScreenSize() {
-    this.isMobile = window.innerWidth < 992;
-    this.updateRoutes();
+  checkScreenSize() {
+    this.isMobile = window.innerWidth <= 992;
   }
 
-  private updateRoutes() {
-    const routes = this.router.config;
-    const mobileRouteIndex = routes.findIndex(route => route.path === '' && route.component === SidebarComponent);
-    if (this.isMobile) {
-      if (mobileRouteIndex === -1) routes.unshift({path: '', component: SidebarComponent});
-    } else {
-      if (mobileRouteIndex !== -1) routes.splice(mobileRouteIndex, 1);
-    }
-    this.router.resetConfig(routes);
+  private checkActivatedRoutePath() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.hasChatOpened = event.url !== '/';
+        this.selectedChatId = parseInt(event.url.split('/')[1]) || -1;
+      }
+    });
   }
 }

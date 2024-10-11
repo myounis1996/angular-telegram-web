@@ -1,6 +1,10 @@
 <div class="d-flex surface-bg py-0 px-3" style="height: 56px">
   <div class="d-flex align-items-center flex-grow-1 w-100">
     <div class="d-flex align-items-center chat-info-padding w-100">
+      <button
+        class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50 me-12px d-lg-none" routerLink="/">
+        <span class="tgico button-icon"></span>
+      </button>
       <div class="avatar-gradient radius-50">
         <img class="rounded-5" src="/54x54.jpg" alt="Profile Pic" width="42" height="42"
              (click)="toggleCollapse()">
@@ -15,21 +19,25 @@
       </div>
     </div>
   </div>
-  <div class="d-flex justify-content-between py-2" >
+  <div class="d-flex justify-content-between py-2">
     <!--  Pinned Messages Container  -->
     <div class="d-none d-lg-flex me-2 w-auto ">
-      <button class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50 me-12px"><span class="tgico button-icon"></span></button>
+      <button class="btn btn-icon p-2 d-flex align-items-center justify-content-center border-0 radius-50 me-12px"><span
+        class="tgico button-icon"></span></button>
       <div class="pinned-container-wrapper p-1 d-flex" (click)="goToNextPinned()">
-        <div style="min-width: 2px !important; height: 40px" class="d-flex flex-column overflow-hidden overflow-y-scroll hide-scrollbar">
-          <div *ngFor="let message of pinnedMessages; let i = index" class="primary-bg strip" style="height: calc(100%/{{pinnedMessages.length}})"
+        <div style="min-width: 2px !important; height: 40px"
+             class="d-flex flex-column overflow-hidden overflow-y-scroll hide-scrollbar">
+          <div *ngFor="let message of pinnedMessages; let i = index" class="primary-bg strip"
+               style="height: calc(100%/{{pinnedMessages.length}})"
                [style.opacity]="i === activePinnedIndex ? '1': '0.4'" id="pinned_{{i}}"></div>
         </div>
         <div class="ms-1 d-flex">
           <img class="media-photo" src="/svg/2048x800.svg" width="32" height="32">
           <div class="d-flex flex-column ms-2">
             <span class="primary-color font-weight-400 font-14 line-h18px mb-1" style="height: 16px; margin-top: -2px;">Pinned Message
-              {{activePinnedIndex !== pinnedMessages.length - 1 ? "#" + (activePinnedIndex + 1) : ""}}</span>
-            <span class="primary-text-color font-weight-400 font-14 text-nowrap  overflow-ellipsis line-h18px" style="min-height: 18px;" [style.max-width.px]="hasMedia ? 202: 238">Photo, "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and d</span>
+              {{ activePinnedIndex !== pinnedMessages.length - 1 ? "#" + (activePinnedIndex + 1) : "" }}</span>
+            <span class="primary-text-color font-weight-400 font-14 text-nowrap  overflow-ellipsis line-h18px"
+                  style="min-height: 18px;" [style.max-width.px]="hasMedia ? 202: 238">Photo, "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and d</span>
           </div>
         </div>
       </div>
@@ -74,8 +82,8 @@
           <span class="primary-text-color font-14 font-weight-500">Search</span>
         </div>
         <div class="d-flex flex-row dropdown-menu-item align-items-center">
-          <span class="tgico btn-menu-item-icon font-20">{{isMuted ? "" : ""}}</span>
-          <span class="primary-text-color font-14 font-weight-500">{{isMuted ? "Unmute" : "Mute"}}</span>
+          <span class="tgico btn-menu-item-icon font-20">{{ isMuted ? "" : "" }}</span>
+          <span class="primary-text-color font-14 font-weight-500">{{ isMuted ? "Unmute" : "Mute" }}</span>
         </div>
         <div class="d-flex flex-row dropdown-menu-item align-items-center">
           <span class="tgico btn-menu-item-icon font-20"></span>

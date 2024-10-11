@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, Renderer2, ViewChild} from '@angular/core';
 import {ToggleModeService} from "../services/toggle-mode.service";
 import {ToggleAnimationService} from "../services/toggle-animation.service";
 
@@ -12,7 +12,7 @@ export class SidebarComponent {
   searchFocused = false;
   searchPlaceholder = "Search"//"Reconnecting..."
   selectedFolderId = 0;
-  selectedChatId = -1;
+  @Input() selectedChatId = -1;
   @ViewChild('foldersElement', {static: false}) foldersElement: ElementRef<HTMLElement> = {} as ElementRef;
   @ViewChild('darkModeIcon') darkModeIcon!: ElementRef<HTMLElement>;
   folders = ["All", "FOLDER1", "FOLDER2", "FOLDER3", "FOLDER4", "FOLDER5"];

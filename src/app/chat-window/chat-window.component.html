@@ -1,5 +1,5 @@
 <div class="row position-relative h-100">
-  <div class="col p-0 m-0 position-relative" [class.col-8]="!isCollapsed">
+  <div class="p-0 m-0 position-relative" [class.col-lg-8]="!isCollapsed" [class.d-none]="!isCollapsed && isMobile">
     <app-chat-header (collapseChange)="collapse.toggle($event)"></app-chat-header>
     <ngx-simplebar class="w-100 position-relative" #chatScrollArea
          style="height: calc(100vh - 130px);">
@@ -108,7 +108,7 @@
     </div>
   </div>
 
-  <div class="col-4 p-0 position-relative border-inline-start surface-bg" #collapse="ngbCollapse"
+  <div class="col-12 col-lg-4 p-0 position-relative border-inline-start surface-bg" #collapse="ngbCollapse"
        [(ngbCollapse)]="isCollapsed" [horizontal]="true" [animation]="false">
     <app-chat-side (collapseChange)="collapse.toggle($event)"></app-chat-side>
   </div>

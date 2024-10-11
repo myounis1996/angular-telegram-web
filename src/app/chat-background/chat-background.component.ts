@@ -1,13 +1,14 @@
-import {AfterViewInit, Component, ElementRef, HostListener, inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, inject, OnDestroy, ViewChild} from '@angular/core';
 import ChatBackgroundGradientRenderer from "../services/gradientRenderer";
 import {ToggleModeService} from "../services/toggle-mode.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-chat-background',
   templateUrl: './chat-background.component.html',
   styleUrl: './chat-background.component.scss'
 })
-export class ChatBackgroundComponent implements AfterViewInit {
+export class ChatBackgroundComponent implements AfterViewInit, OnDestroy {
   lightColors = "#dbddbb,#6ba587,#d5d88d,#88b884";
   darkColors = "#fec496,#dd6cb9,#962fbf,#4f5bd5"
   @ViewChild("background") background!: ElementRef<HTMLDivElement>;
@@ -15,21 +16,18 @@ export class ChatBackgroundComponent implements AfterViewInit {
   @ViewChild("gradientCanvas") gradientCanvas!: ElementRef<HTMLCanvasElement>;
   toggleModeService = inject(ToggleModeService);
   patternImg: HTMLImageElement = new Image();
+  subscriptions: Subscription[] = [];
 
   ngAfterViewInit(): void {
     this.patternImg.onload = () => {
-      this.toggleModeService.currentMode$.subscribe((value) => {
+      const sub = this.toggleModeService.currentMode$.subscribe((value) => {
         const colors = value === 'dark' ? this.darkColors : this.lightColors;
         this.gradientCanvas.nativeElement.setAttribute("data-colors", colors)
         this.changeBackground()
       });
+      this.subscriptions.push(sub);
     }
     this.patternImg.src = "pattern.svg"
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.changeBackground();
   }
 
   changeBackground() {
@@ -70,5 +68,9 @@ export class ChatBackgroundComponent implements AfterViewInit {
         draw(bottomY);
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }
