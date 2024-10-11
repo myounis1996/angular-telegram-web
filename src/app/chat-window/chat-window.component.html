@@ -1,9 +1,9 @@
 <div class="row position-relative h-100">
   <div class="p-0 m-0 position-relative" [class.col-lg-8]="!isCollapsed" [class.d-none]="!isCollapsed && isMobile">
     <app-chat-header (collapseChange)="collapse.toggle($event)"></app-chat-header>
-    <ngx-simplebar class="w-100 position-relative" #chatScrollArea
+    <ngx-simplebar class="w-100 position-relative overflow-x-hidden" #chatScrollArea
          style="height: calc(100vh - 130px);">
-      <div class="container w-100 d-flex flex-column content-box py-2 " style="max-width: 640px">
+      <div class="container-fluid w-100 d-flex flex-column content-box py-2 " style="max-width: 640px">
         <section>
           <div class="sticky-top d-flex justify-content-center section-date font-weight-500 pb-">
             <div class="cursor-pointer rounded-pill bg-highlight date-padding text-white">
